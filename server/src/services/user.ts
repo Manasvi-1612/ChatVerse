@@ -1,6 +1,5 @@
-import { PrismaClient, Prisma, User } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import {Prisma, User } from '@prisma/client';
+import prisma from '../services/db';
 
 import jwt from 'jsonwebtoken';
 

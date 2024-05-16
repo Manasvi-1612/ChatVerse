@@ -17,6 +17,7 @@ const validate = (schema) => (req, res, next) => __awaiter(void 0, void 0, void 
     }
     catch (error) {
         const validationError = error;
+        console.log(validationError.errors);
         return res.status(400).json({ error: validationError.errors[0] });
     }
 });

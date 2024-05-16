@@ -17,8 +17,6 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const helmet_1 = __importDefault(require("helmet"));
 const cors_1 = __importDefault(require("cors"));
 const client_1 = require("@prisma/client");
-const ws_1 = require("ws");
-const socket_1 = require("./socket");
 // import { initializeSocket } from "./socket";
 dotenv_1.default.config();
 const prisma = new client_1.PrismaClient();
@@ -41,7 +39,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
             message: err.message,
         });
     });
-    app.use('/api', require('./routes/auth.route'));
+    app.use('/api', require('./routes/auth'));
     app.get("/", (req, res) => {
         res.send("HELLO TO THE SERVER!");
     });
@@ -49,8 +47,6 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const server = app.listen(port, () => {
         console.log(`[server]: Server is running at http://localhost:${port}`);
     });
-    const wsServer = new ws_1.WebSocketServer({ server });
-    (0, socket_1.initializeSocket)(wsServer);
 });
 main()
     .catch((err) => {

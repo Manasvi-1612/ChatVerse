@@ -5,8 +5,6 @@ import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 import AppError from "./utils/errorHandler";
 import { NextFunction } from "express";
-import { WebSocketServer } from "ws";
-import { initializeSocket } from "./socket";
 // import { initializeSocket } from "./socket";
 
 dotenv.config();
@@ -40,7 +38,7 @@ const main = async () => {
         });
     });
 
-    app.use('/api', require('./routes/auth.route'))
+    app.use('/api', require('./routes/auth'))
 
     app.get("/", (req: Request, res: Response) => {
         res.send("HELLO TO THE SERVER!");
@@ -51,10 +49,6 @@ const main = async () => {
     const server = app.listen(port, () => {
         console.log(`[server]: Server is running at http://localhost:${port}`);
     });
-
-
-    const wsServer = new WebSocketServer({ server });
-    initializeSocket(wsServer);
 }
 
 main()

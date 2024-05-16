@@ -1,37 +1,30 @@
 import { Heading, VStack, ButtonGroup, Button } from "@chakra-ui/react"
 import { Form, Formik } from "formik"
 import FormField from "../components/FormField"
-
-
+import { SignupValidationSchema } from "../lib/validator"
+import { useDispatch } from "react-redux"
+import { registerUser } from "../redux/slices/actions/authActions"
 
 
 const Signup = () => {
 
-    // const initialValues = {
-    //     email: "",
-    //     username: "",
-    //     password: ""
-    // }
+    const dispatch = useDispatch()
 
-    // const handleSubmit = async (values: signupParams) => {
-    //     try {
-    //         const data = await signupUser(values)
-    //         console.log(data)
-    //     } catch (error) {
-    //         handleError(error)
-    //     }
-    // }
+    const initialValues = {
+        email: "",
+        name: "",
+        password: ""
+    }
+
 
     return (
-        // <Formik
-        //     initialValues={initialValues}
-        //     onSubmit={async (values, actions) => {
-        //         await handleSubmit(values)
-        //         actions.resetForm()
-        //     }}
-
-        //     validationSchema={SignupValidationSchema}
-        // >
+        <Formik
+            initialValues={initialValues}
+            onSubmit={async (values, actions) => {
+                dispatch(registerUser(values) as any)
+            }}
+            validationSchema={SignupValidationSchema}
+        >
             <VStack
                 as={Form}
                 w={{ base: "90%", md: "500px" }}
@@ -45,20 +38,20 @@ const Signup = () => {
                     label="Email"
                     name="email"
                     type="email"
-                    placeholder="Enter email"
+                    placeholder="Enter Email"
                 />
                 <FormField
-                    label="Username"
-                    name="username"
+                    label="name"
+                    name="name"
                     type="text"
-                    placeholder="Enter username"
+                    placeholder="Enter Full Name"
                 />
 
                 <FormField
                     label="Password"
                     name="password"
                     type="password"
-                    placeholder="Enter password"
+                    placeholder="Enter Password"
                 />
 
                 <ButtonGroup pt="1rem">
@@ -67,7 +60,7 @@ const Signup = () => {
                     </Button>
                 </ButtonGroup>
             </VStack>
-        // </Formik>
+        </Formik>
     )
 }
 

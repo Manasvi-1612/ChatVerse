@@ -4,7 +4,7 @@ import FormField from "../components/FormField"
 // import { loginParams } from "../types"
 import { useNavigate } from "react-router-dom"
 import { LoginValidationSchema } from "../lib/validator"
-import { loginUser } from "../lib/actons/auth.actions"
+import { loginUser } from "../lib/actions/auth.actions"
 import { loginParams } from "../types"
 
 
@@ -74,7 +74,7 @@ const Login = () => {
                     <Button colorScheme="teal" type="submit">
                         Log In
                     </Button>
-                    <Button onClick={() => navigate("/register")}>Create Account</Button>
+                    <Button onClick={() => navigate("/signup")}>Create Account</Button>
                 </ButtonGroup>
             </VStack>
          </Formik>

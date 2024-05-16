@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction, CookieOptions } from "express";
 import bcrypt from "bcryptjs";
-import { findUniqueUser, createUser, signToken } from "../services/user.service";
+import { findUniqueUser, createUser, signToken } from "../services/user";
 // import session from "express-session";
 import AppError from "../utils/errorHandler";
 
@@ -14,19 +14,19 @@ const cookieOptions: CookieOptions = {
 
 export const signupUserHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-
-        const salt = bcrypt.genSaltSync(10);
-        const hashedPassword = bcrypt.hashSync(req.body.password, salt);
-
+        console.log("req.body", req.body);
         const user = await findUniqueUser({ email: req.body.email });
         if (user) {
             return res.status(400).json({ message: "User already exist" })
         }
 
+        const salt = bcrypt.genSaltSync(10);
+        const hashedPassword = bcrypt.hashSync(req.body.password, salt);
+
         const newUser = await createUser({
             email: req.body.email,
             password: hashedPassword,
-            username: req.body.username
+            name: req.body.name
         })
 
         res.status(201).json({
