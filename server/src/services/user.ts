@@ -26,6 +26,7 @@ export const signToken = (user: Prisma.UserUncheckedCreateInput) => {
     return token
 }
 
+
 // exports.signout = (req, res) => {
 //     res.clearCookie('token')
 //     res.json({
