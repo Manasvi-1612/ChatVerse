@@ -25,7 +25,6 @@ const cookieOptions = {
 };
 const signupUserHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        console.log("req.body", req.body);
         const user = yield (0, user_1.findUniqueUser)({ email: req.body.email });
         if (user) {
             return res.status(400).json({ message: "User already exist" });

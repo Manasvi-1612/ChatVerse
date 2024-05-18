@@ -4,14 +4,13 @@ import FormField from "../components/FormField"
 // import { loginParams } from "../types"
 import { useNavigate } from "react-router-dom"
 import { LoginValidationSchema } from "../lib/validator"
-import { loginUser } from "../lib/actions/auth.actions"
-import { loginParams } from "../types"
-
+import { useDispatch } from "react-redux"
+import { loginUser } from "../redux/slices/actions/authActions"
 
 
 const Login = () => {
 
-    // const signIn = useSignIn()
+    const dispatch = useDispatch()
 
     const navigate = useNavigate()
 
@@ -20,32 +19,15 @@ const Login = () => {
         password: ""
     }
 
-    const handleSubmit = async (values: loginParams) => {
-        try {
-            const res = await loginUser(values)
-            if (res && !res.error) {
-                // signIn({
-                //     auth:{
-                //         token: res.token,
-                //         type: "Bearer",
-                //     }
-                // })
-                console.log("Login successful", res)
-            }
-        } catch (error) {
-
-        }
-    }
-
     return (
         <Formik
             initialValues={initialValues}
             onSubmit={async (values, actions) => {
-                await handleSubmit(values)
+                dispatch(loginUser(values) as any)
                 actions.resetForm()
             }}
 
-        validationSchema={LoginValidationSchema}
+            validationSchema={LoginValidationSchema}
         >
             <VStack
                 as={Form}
@@ -77,7 +59,7 @@ const Login = () => {
                     <Button onClick={() => navigate("/signup")}>Create Account</Button>
                 </ButtonGroup>
             </VStack>
-         </Formik>
+        </Formik>
     )
 }
 

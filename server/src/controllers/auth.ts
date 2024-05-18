@@ -14,7 +14,6 @@ const cookieOptions: CookieOptions = {
 
 export const signupUserHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log("req.body", req.body);
         const user = await findUniqueUser({ email: req.body.email });
         if (user) {
             return res.status(400).json({ message: "User already exist" })
