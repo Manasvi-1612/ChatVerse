@@ -3,7 +3,6 @@ import { Form, Formik } from "formik"
 import FormField from "../components/FormField"
 import { SignupValidationSchema } from "../lib/validator"
 import { useDispatch } from "react-redux"
-import { registerUser } from "../redux/slices/actions/authActions"
 
 
 const Signup = () => {
@@ -21,7 +20,7 @@ const Signup = () => {
         <Formik
             initialValues={initialValues}
             onSubmit={async (values, actions) => {
-                dispatch(registerUser(values) as any)
+                // dispatch(registerUser(values) as any)
             }}
             validationSchema={SignupValidationSchema}
         >

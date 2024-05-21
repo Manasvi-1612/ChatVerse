@@ -1,51 +1,71 @@
-import { createAsyncThunk } from '@reduxjs/toolkit'
-import { loginParams, signupParams } from '../../../types'
-import axios from 'axios'
 
-const backendURL = 'http://localhost:3000'
+import { apiSlice } from "../apiSlice";
+import { logout, setCredentials } from "../authSlice";
 
-export const registerUser = createAsyncThunk(
-    'auth/signup',
-    async (creds: signupParams, { rejectWithValue, getState }) => {
-        try {
+const authActions = apiSlice.injectEndpoints({
+    endpoints: (builder) => ({
+        login: builder.mutation({
+            query: credentials => ({
+                url: '/auth/login',
+                method: 'POST',
+                body: { ...credentials }
+            })
+        }),
 
-            const res = await axios.post(`${backendURL}/api/auth/signup`, creds)
+        sendLogout: builder.mutation({
+            query: () => ({
+                url: '/auth/logout',
+                method: 'POST'
+            }),
+            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+                try {
+                    //on success - queryhas been fulfilled
+                    await queryFulfilled;
+                    // console.log('logout success', data)
+                    dispatch(logout())
 
-            // console.log("res", res)
-            // console.log("getState", getState())
+                    //reset api cache state
+                    dispatch(apiSlice.util.resetApiState())
 
-            return res.data
+                } catch (error) {
+                    console.log('logout error', error)
+                }
+            }
+        }),
 
-        } catch (error) {
-            rejectWithValue(error)
-        }
-    }
-)
+        refresh: builder.mutation({
+            query: () => ({
+                url: '/auth/refresh',
+                method: 'GET',
+            }),
+            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled
+                    console.log(data)
+                    const { accessToken } = data
+                    dispatch(setCredentials({ accessToken }))
+                } catch (err) {
+                    console.log(err)
+                }
+            }
+        }),
 
-export const loginUser = createAsyncThunk(
-    'auth/login',
-    async (creds: loginParams, { rejectWithValue, getState }) => {
-        try {
+        verify: builder.mutation({
+            query: () => ({
+                url: '/auth/verify',
+                method: 'GET'
+            }),
+            async onQueryStarted({ dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled
+                    console.log("data", data)
+                } catch (err) {
+                    console.log(err)
+                }
+            }
 
-            const res = await axios.post(`${backendURL}/api/auth/login`, creds)
-            localStorage.setItem('token', res.data.token)
-            return res.data
-
-        } catch (error) {
-            rejectWithValue(error)
-        }
+        }),
     })
+})
 
-// export const verifyToken = createAsyncThunk(
-//     'auth/verify',
-//     async (token: string, { rejectWithValue }) => {
-//         try {
-
-//             const res = await axios.post(`${backendURL}/api/auth/verify-token`, { token })
-//             return res.data
-
-//         } catch (error) {
-//             rejectWithValue(error)
-//         }
-//     }
-// )
+export const { useLoginMutation, useSendLogoutMutation, useRefreshMutation, useVerifyMutation } = authActions

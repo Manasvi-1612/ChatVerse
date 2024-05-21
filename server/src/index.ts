@@ -5,7 +5,8 @@ import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 import AppError from "./utils/errorHandler";
 import { NextFunction } from "express";
-// import { initializeSocket } from "./socket";
+import cookieParser from 'cookie-parser';
+
 
 dotenv.config();
 
@@ -24,6 +25,9 @@ const main = async () => {
             credentials: true,
         })
     );
+    app.use(cookieParser());
+
+    
 
     // GLOBAL ERROR HANDLER
     app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {

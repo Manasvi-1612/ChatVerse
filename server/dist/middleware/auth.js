@@ -13,27 +13,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.veriftToken = void 0;
-const errorHandler_1 = __importDefault(require("../utils/errorHandler"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const user_1 = require("../services/user");
 const veriftToken = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
-    try {
-        const token = ((_a = req.cookies) === null || _a === void 0 ? void 0 : _a.token) || ((_b = req.header('Authorization')) === null || _b === void 0 ? void 0 : _b.replace("Bearer ", ""));
-        if (!token) {
-            throw new errorHandler_1.default(401, "Unauthorized request");
-        }
-        const decodedToken = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
-        const user = yield (0, user_1.findUniqueUser)({ id: decodedToken._id });
-        if (!user) {
-            throw new errorHandler_1.default(401, "Invalid Access Token");
-        }
-        req.user = Object.assign(Object.assign({}, user), { password: "" });
+    const authHeader = req.headers.authorization || req.headers.Authorization;
+    if (!(authHeader === null || authHeader === void 0 ? void 0 : authHeader.startsWith('Bearer '))) {
+        return res.status(401).json({ message: 'Unauthorized' });
+    }
+    const token = authHeader.split(' ')[1];
+    jsonwebtoken_1.default.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+        if (err)
+            return res.status(403).json({ message: 'Forbidden' });
+        req.user = { id: decoded._id, email: decoded.email };
         next();
-    }
-    catch (error) {
-        console.log("error", error);
-        next(error);
-    }
+    });
 });
 exports.veriftToken = veriftToken;

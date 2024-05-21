@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signToken = exports.findUniqueUser = exports.createUser = void 0;
+exports.signToken = exports.findUser = exports.updateUser = exports.findUniqueUser = exports.createUser = void 0;
 const db_1 = __importDefault(require("../services/db"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const createUser = (input) => __awaiter(void 0, void 0, void 0, function* () {
@@ -28,9 +28,22 @@ const findUniqueUser = (where, select) => __awaiter(void 0, void 0, void 0, func
     }));
 });
 exports.findUniqueUser = findUniqueUser;
-const signToken = (user) => {
+const updateUser = (where, data) => __awaiter(void 0, void 0, void 0, function* () {
+    return (yield db_1.default.user.update({
+        where,
+        data
+    }));
+});
+exports.updateUser = updateUser;
+const findUser = (where) => __awaiter(void 0, void 0, void 0, function* () {
+    return yield db_1.default.user.findFirst({
+        where
+    });
+});
+exports.findUser = findUser;
+const signToken = (user, secret, expiresIn) => {
     //generate a token and send to client
-    const token = jsonwebtoken_1.default.sign({ _id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1d' });
+    const token = jsonwebtoken_1.default.sign({ _id: user.id, email: user.email }, secret, { expiresIn });
     return token;
 };
 exports.signToken = signToken;

@@ -16,7 +16,7 @@ type AsyncFunction = (
 
 //Async functions are Higher Order Functions that take a function as an argument and return a new function.
 //here this fn function is passed to the next HO function
-const asyncHandler = (fn: AsyncFunction) => async (req: Request, res: Response, next: NextFunction) => {
+const asyncHandler = (fn: any) => async (req: Request, res: Response, next: NextFunction) => {
     try {
         await fn(req, res, next)
     } catch (error: Error | any) {

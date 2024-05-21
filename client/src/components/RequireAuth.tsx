@@ -1,15 +1,40 @@
-import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../redux/store"
-import React, { useEffect } from "react"
+import React, { useEffect, useRef } from "react"
 import { Navigate } from "react-router-dom"
+import useAuth from "../hooks/useAuth"
+import { useRefreshMutation, useVerifyMutation } from "../redux/slices/actions/authActions"
+const prod = import.meta.env.PROD
 
 const RequireAuth = ({ children, fallbackPath }: { children: React.ReactNode, fallbackPath?: string }) => {
 
-    const dispatch = useDispatch()
+    const auth = useAuth()
 
-    const { isLoggedIn, token } = useSelector((state: RootState) => state.auth)
+    const [refresh] = useRefreshMutation()
 
-    const isAuth = token !== null
+    const effectRan = useRef(false)
+
+    useEffect(() => {
+        if (effectRan.current === true || prod) {
+            const res = async () => {
+                try {
+                    const response =
+                        await refresh({})
+                    //const { accessToken } = response.data
+                    console.log(response)
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+            console.log("refreshing token", auth)
+            if (!auth) res()
+        }
+
+        return () => {
+            effectRan.current = true
+        }
+    }, [refresh])
+
+
+    const isAuth = auth !== null
 
     const fp = fallbackPath || "/"
 
