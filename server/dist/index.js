@@ -17,7 +17,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const helmet_1 = __importDefault(require("helmet"));
 const cors_1 = __importDefault(require("cors"));
 const client_1 = require("@prisma/client");
-// import { initializeSocket } from "./socket";
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 dotenv_1.default.config();
 const prisma = new client_1.PrismaClient();
 const app = (0, express_1.default)();
@@ -29,6 +29,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
         origin: "http://localhost:5173",
         credentials: true,
     }));
+    app.use((0, cookie_parser_1.default)());
     // GLOBAL ERROR HANDLER
     app.use((err, req, res, next) => {
         err.status = err.status || 'error';

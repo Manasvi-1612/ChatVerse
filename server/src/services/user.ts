@@ -1,4 +1,4 @@
-import {Prisma, User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import prisma from '../services/db';
 
 import jwt from 'jsonwebtoken';
@@ -20,9 +20,23 @@ export const findUniqueUser = async (
 };
 
 
-export const signToken = (user: Prisma.UserUncheckedCreateInput) => {
+export const updateUser = async (where: Prisma.UserWhereUniqueInput, data: Prisma.UserUpdateInput) => {
+    return (await prisma.user.update({
+        where,
+        data
+    })) as User
+}
+
+export const findUser = async (where: Prisma.UserWhereInput) => {
+    return await prisma.user.findFirst({
+        where
+    })
+}
+
+
+export const signToken = (user: Prisma.UserUncheckedCreateInput, secret: string, expiresIn: string) => {
     //generate a token and send to client
-    const token = jwt.sign({ _id: user.id, email: user.email }, process.env.JWT_SECRET!, { expiresIn: '1d' })
+    const token = jwt.sign({ _id: user.id, email: user.email }, secret, { expiresIn })
     return token
 }
 

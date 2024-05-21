@@ -14,9 +14,10 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid()) //generate a uuid for every new message
-  name String 
-  email String @unique
-  password String
-  image String? //optional
+  id           String  @id @default(uuid()) //generate a uuid for every new message
+  name         String
+  email        String  @unique
+  password     String
+  image        String? //optional
+  refreshToken String?
 }

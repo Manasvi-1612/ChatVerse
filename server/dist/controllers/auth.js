@@ -12,16 +12,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginUserHandler = exports.signupUserHandler = void 0;
+exports.logoutHandler = exports.refreshHandler = exports.loginUserHandler = exports.signupUserHandler = void 0;
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const user_1 = require("../services/user");
-// import session from "express-session";
 const errorHandler_1 = __importDefault(require("../utils/errorHandler"));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const cookieOptions = {
-    // maxAge: 1000 * 60 * 15, // would expire after 15 minutes // Expires specifying an actual date-time, and Max-Age specifying a time span.
-    expires: new Date(Date.now() + 86400000), // would expire after 24 hours
-    httpOnly: true, // The cookie only accessible by the web server
-    // signed: true // Indicates if the cookie should be signed
+    httpOnly: true, //accessible only by the web server
+    // secure: true,// for https connection
+    sameSite: 'none', //must be used to allow cross-site cookie use
+    expires: new Date(Date.now() + 24 * 60 * 60 * 1000), //expiry time
 };
 const signupUserHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -56,12 +56,18 @@ const loginUserHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, f
         if (!bcryptjs_1.default.compareSync(req.body.password, user.password)) {
             return next(new errorHandler_1.default(400, 'Invalid Credentials'));
         }
-        const token = (0, user_1.signToken)(user);
-        res.cookie('token', token, cookieOptions);
+        const accessToken = (0, user_1.signToken)(user, process.env.ACCESS_TOKEN_SECRET, '10s');
+        const refreshToken = (0, user_1.signToken)(user, process.env.REFRESH_TOKEN_SECRET, '1d');
+        // // Saving refreshToken with current user
+        user.refreshToken = refreshToken;
+        const result = yield (0, user_1.updateUser)({ id: user.id }, user);
+        // //secure cookie with refresh token
+        res.cookie('jwt', refreshToken, cookieOptions);
+        // //sent access token containing user data
         res.status(200).json({
             status: 'success',
             message: 'User is successfully logged in.',
-            token
+            accessToken,
         });
     }
     catch (error) {
@@ -70,3 +76,54 @@ const loginUserHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, f
     }
 });
 exports.loginUserHandler = loginUserHandler;
+//refresh token generates a new access token if refresh token in cookie is valid
+const refreshHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const cookie = req.cookies;
+        if (!(cookie === null || cookie === void 0 ? void 0 : cookie.jwt)) {
+            throw new errorHandler_1.default(401, 'Unauthorized');
+        }
+        const refreshToken = cookie.jwt;
+        //verification of the token 
+        jsonwebtoken_1.default.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, decoded) => __awaiter(void 0, void 0, void 0, function* () {
+            if (err)
+                throw new errorHandler_1.default(403, 'Forbidden');
+            const user = yield (0, user_1.findUniqueUser)({ id: decoded._id });
+            if (!user)
+                throw new errorHandler_1.default(401, 'Unauthorized');
+            //generate a new access token - this is the new token that will be used to access protected routes
+            const accessToken = (0, user_1.signToken)(user, process.env.ACCESS_TOKEN_SECRET, '10s');
+            res.status(200).json({ accessToken });
+        }));
+    }
+    catch (error) {
+        console.log("error", error);
+        next(error);
+    }
+});
+exports.refreshHandler = refreshHandler;
+const logoutHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        // On client, also delete the accessToken
+        const cookies = req.cookies;
+        if (!(cookies === null || cookies === void 0 ? void 0 : cookies.jwt))
+            return res.sendStatus(204); //No content
+        const refreshToken = cookies.jwt;
+        // Is refreshToken in db?
+        const user = yield (0, user_1.findUser)({ refreshToken });
+        if (!user) {
+            res.clearCookie('jwt', cookieOptions);
+            return res.sendStatus(204);
+        }
+        // Delete refreshToken in db
+        user.refreshToken = null;
+        const result = yield (0, user_1.updateUser)({ id: user.id }, user);
+        res.clearCookie('jwt', cookieOptions);
+        res.sendStatus(204);
+    }
+    catch (error) {
+        console.log("error", error);
+        next(error);
+    }
+});
+exports.logoutHandler = logoutHandler;
