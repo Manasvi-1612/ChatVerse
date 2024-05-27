@@ -4,18 +4,18 @@ import FormField from "../components/FormField"
 // import { loginParams } from "../types"
 import { useNavigate } from "react-router-dom"
 import { LoginValidationSchema } from "../lib/validator"
-import { useDispatch } from "react-redux"
 import { useLoginMutation } from "../redux/slices/actions/authActions"
-import { setCredentials } from "../redux/slices/authSlice"
+import useLocalStorage from "../hooks/useLocalStorage"
 
 
 const Login = () => {
 
-    const dispatch = useDispatch()
 
     const navigate = useNavigate()
 
     const [login, { isLoading }] = useLoginMutation()
+
+    const [storage, setStorage] = useLocalStorage()
 
     if (isLoading) return <div>Loading...</div>
 
@@ -31,11 +31,12 @@ const Login = () => {
                 try {
                     // With .unwrap(), it will resolve to the value of the fulfilled action, or throw on a rejected action.
                     // The idea here is that you should be able to dispatch an asyncThunk without having to catch it every time, but only if you really want to write more logic based on it.
+                    setStorage(true)    
                     const { accessToken } = await login(values).unwrap()
-                    dispatch(setCredentials(accessToken))
+                    console.log("accessToken", accessToken)
+            
                     actions.resetForm()
                     navigate("/secure")
-
                 } catch (error) {
 
                 }

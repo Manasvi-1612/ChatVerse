@@ -21,6 +21,7 @@ const veriftToken = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
     }
     const token = authHeader.split(' ')[1];
     jsonwebtoken_1.default.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+        console.log("decoded", err);
         if (err)
             return res.status(403).json({ message: 'Forbidden' });
         req.user = { id: decoded._id, email: decoded.email };

@@ -61,7 +61,12 @@ export const loginUserHandler = async (req: Request, res: Response, next: NextFu
         const result = await updateUser({ id: user.id }, user)
 
         // //secure cookie with refresh token
-        res.cookie('jwt', refreshToken, cookieOptions)
+        res.cookie('jwt', refreshToken, {
+            httpOnly: true,
+            // secure: true,// for https connection
+            sameSite: 'none',
+            expires: new Date(Date.now() + 24 * 60 * 60 * 1000), //expiry time
+        })
 
         // //sent access token containing user data
         res.status(200).json({
@@ -79,6 +84,7 @@ export const loginUserHandler = async (req: Request, res: Response, next: NextFu
 //refresh token generates a new access token if refresh token in cookie is valid
 export const refreshHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
+
         const cookie = req.cookies
         if (!cookie?.jwt) {
             throw new AppError(401, 'Unauthorized')
