@@ -14,6 +14,7 @@ export const veriftToken = async (req: IUserRequest, res: Response, next: NextFu
 
     const authHeader = req.headers.authorization || req.headers.Authorization
 
+
     if (!(authHeader as string)?.startsWith('Bearer ')) {
         return res.status(401).json({ message: 'Unauthorized' })
     }
@@ -23,6 +24,7 @@ export const veriftToken = async (req: IUserRequest, res: Response, next: NextFu
         token,
         process.env.ACCESS_TOKEN_SECRET!,
         (err: any, decoded: any) => {
+            console.log("decoded", err)
             if (err) return res.status(403).json({ message: 'Forbidden' })
             req.user = { id: decoded._id, email: decoded.email }
             next()

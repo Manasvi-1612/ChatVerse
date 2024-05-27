@@ -7,9 +7,10 @@ const baseQuery = fetchBaseQuery({
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
 
-        const token = (getState() as RootState).auth.token.accessToken
+        const token: any = (getState() as RootState).auth.token
+
         if (token) {
-            headers.set("authorization", `Bearer ${token}`)
+            headers.set("authorization", `Bearer ${token?.accessToken}`)
         }
         return headers
     }
@@ -28,7 +29,7 @@ const baseQueryWithReauth: BaseQueryFn<
     console.log("result", result)
 
     // If you want, handle other status codes, too
-    if (result.error?.status === 'FETCH_ERROR') {
+    if (result.error?.status !== null) {
         console.log('sending refresh token')
 
         // send refresh token to get new access token 
