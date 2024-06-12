@@ -18,18 +18,19 @@ const helmet_1 = __importDefault(require("helmet"));
 const cors_1 = __importDefault(require("cors"));
 const client_1 = require("@prisma/client");
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const socket_1 = __importDefault(require("./services/socket"));
+const http_1 = require("http");
 dotenv_1.default.config();
 const prisma = new client_1.PrismaClient();
 const app = (0, express_1.default)();
-const server = require("http").createServer(app);
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use(express_1.default.json());
     app.use((0, helmet_1.default)());
+    app.use((0, cookie_parser_1.default)());
     app.use((0, cors_1.default)({
         origin: "http://localhost:5173",
         credentials: true,
     }));
-    app.use((0, cookie_parser_1.default)());
     // GLOBAL ERROR HANDLER
     app.use((err, req, res, next) => {
         err.status = err.status || 'error';
@@ -44,8 +45,13 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.get("/", (req, res) => {
         res.send("HELLO TO THE SERVER!");
     });
+    //socket init
+    const server = (0, http_1.createServer)(app);
+    const socketService = new socket_1.default();
+    socketService.io.attach(server);
+    socketService.initListeners();
     const port = process.env.PORT || 3000;
-    const server = app.listen(port, () => {
+    server.listen(port, () => {
         console.log(`[server]: Server is running at http://localhost:${port}`);
     });
 });

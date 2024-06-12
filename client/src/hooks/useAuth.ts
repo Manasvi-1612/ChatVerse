@@ -10,7 +10,6 @@ type authToken = {
 const useAuth = () => {
     const token = useSelector(authSelector);
 
-    console.log("token", token)
 
     if (token) {
         const decoded = jwtDecode<authToken>(JSON.stringify(token));

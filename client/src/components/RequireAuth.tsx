@@ -25,8 +25,6 @@ const RequireAuth = ({ children, fallbackPath }: { children: React.ReactNode, fa
                 try {
                     const response =
                         await refresh({})
-                    //const { accessToken } = response.data
-                    console.log("response", response)
 
                     //There's one prblm we have isSuccess which can be set to true even before the setCredentials action is dispatched, that's why we set one more state to check yes we got the thing!
                     setTrueSuccess(true)
