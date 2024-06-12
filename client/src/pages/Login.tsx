@@ -33,8 +33,6 @@ const Login = () => {
                     // The idea here is that you should be able to dispatch an asyncThunk without having to catch it every time, but only if you really want to write more logic based on it.
                     setStorage(true)    
                     const { accessToken } = await login(values).unwrap()
-                    console.log("accessToken", accessToken)
-            
                     actions.resetForm()
                     navigate("/secure")
                 } catch (error) {

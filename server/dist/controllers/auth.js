@@ -64,8 +64,6 @@ const loginUserHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, f
         // //secure cookie with refresh token
         res.cookie('jwt', refreshToken, {
             httpOnly: true,
-            // secure: true,// for https connection
-            sameSite: 'none',
             expires: new Date(Date.now() + 24 * 60 * 60 * 1000), //expiry time
         });
         // //sent access token containing user data
