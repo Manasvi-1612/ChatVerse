@@ -19,7 +19,7 @@ const main = async () => {
     app.use(express.json());
     app.use(helmet());
 
-    app.use(cookieParser());
+    app.use(cookieParser())
 
     app.use(
         cors({
