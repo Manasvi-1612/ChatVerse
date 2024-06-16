@@ -1,4 +1,5 @@
 import { Server } from "socket.io"
+
 import Redis from 'ioredis'
 
 const { REDIS_URI } = process.env
@@ -24,6 +25,7 @@ class SocketService {
         this._io = new Server({
             cors: {
                 origin: "http://localhost:5173",
+
                 allowedHeaders: ["*"]
             }
         })

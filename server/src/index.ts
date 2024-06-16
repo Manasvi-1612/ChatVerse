@@ -21,6 +21,7 @@ const main = async () => {
 
     app.use(cookieParser())
 
+
     app.use(
         cors({
             origin: "http://localhost:5173",
