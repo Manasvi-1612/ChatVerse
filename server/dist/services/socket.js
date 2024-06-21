@@ -41,7 +41,6 @@ class SocketService {
         //when ever someone connects to the server- handling connection event
         io.on('connection', (socket) => {
             console.log('user connected', socket.id);
-
             const handleMessage = (data) => __awaiter(this, void 0, void 0, function* () {
                 const { message, roomId } = data;
                 // io.to(roomId).emit('message', message);
@@ -63,7 +62,6 @@ class SocketService {
                 catch (error) {
                     console.error("Error handling message:", error);
                 }
-
             }));
         });
     }
