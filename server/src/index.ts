@@ -8,10 +8,10 @@ import { NextFunction } from "express";
 import cookieParser from 'cookie-parser';
 import SocketService from "./services/socket";
 import { createServer } from "http";
+import prisma from './services/db'
 
 dotenv.config();
 
-const prisma = new PrismaClient();
 const app: Express = express();
 
 const main = async () => {
@@ -49,13 +49,13 @@ const main = async () => {
     });
 
 
-     //socket init
-     const server = createServer(app);
-     const socketService = new SocketService()
- 
-     socketService.io.attach(server)
-     socketService.initListeners()
- 
+    //socket init
+    const server = createServer(app);
+    const socketService = new SocketService()
+
+    socketService.io.attach(server)
+    socketService.initListeners()
+
 
     const port = process.env.PORT || 3000;
 
@@ -63,8 +63,8 @@ const main = async () => {
         console.log(`[server]: Server is running at http://localhost:${port}`);
     });
 
-    
-   
+
+
 
 }
 
