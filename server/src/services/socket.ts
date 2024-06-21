@@ -53,7 +53,7 @@ class SocketService {
 
             socket.on('joinRoom', function (room) {
                 socket.join(room);
-                console.log('user joined room', room)
+                console.log('user joined room', room) 
             })
 
             //whenever there's a new message - emit message to server (one side communication)
