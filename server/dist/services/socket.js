@@ -23,14 +23,12 @@ const sub = new ioredis_1.default(REDIS_URI);
 sub.on('error', (err) => {
     throw new Error(err);
 });
-
 class SocketService {
     constructor() {
         console.log('SocketService init');
         this._io = new socket_io_1.Server({
             cors: {
                 origin: "http://localhost:5173",
-
                 allowedHeaders: ["*"]
             }
         });
