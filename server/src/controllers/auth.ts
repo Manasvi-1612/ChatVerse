@@ -82,7 +82,7 @@ export const refreshHandler = async (req: Request, res: Response, next: NextFunc
     try {
 
         const cookie = req.cookies
-        
+
         if (!cookie?.jwt) {
             throw new AppError(401, 'Unauthorized')
         }

@@ -1,24 +1,24 @@
 import { Server } from "socket.io"
 import Redis from 'ioredis'
 
-const { REDIS_URI } = process.env
+// const { REDIS_URI } = process.env
 
-const pub = new Redis(REDIS_URI as string)
-pub.on('error', (err: string) => {
-    throw new Error(err)
-})
+// const pub = new Redis(REDIS_URI as string)
+// pub.on('error', (err: string) => {
+//     throw new Error(err)
+// })
 
 
-const sub = new Redis(REDIS_URI as string)
+// const sub = new Redis(REDIS_URI as string)
 
-sub.on('error', (err: string) => {
-    throw new Error(err)
-})
+// sub.on('error', (err: string) => {
+//     throw new Error(err)
+// })
 
 class SocketService {
     //instance variable of class of type Server
     private _io: Server
-
+ 
     constructor() {
         console.log('SocketService init')
         this._io = new Server({

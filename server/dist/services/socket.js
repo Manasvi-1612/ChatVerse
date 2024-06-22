@@ -8,21 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const socket_io_1 = require("socket.io");
-const ioredis_1 = __importDefault(require("ioredis"));
-const { REDIS_URI } = process.env;
-const pub = new ioredis_1.default(REDIS_URI);
-pub.on('error', (err) => {
-    throw new Error(err);
-});
-const sub = new ioredis_1.default(REDIS_URI);
-sub.on('error', (err) => {
-    throw new Error(err);
-});
+// const { REDIS_URI } = process.env
+// const pub = new Redis(REDIS_URI as string)
+// pub.on('error', (err: string) => {
+//     throw new Error(err)
+// })
+// const sub = new Redis(REDIS_URI as string)
+// sub.on('error', (err: string) => {
+//     throw new Error(err)
+// })
 class SocketService {
     constructor() {
         console.log('SocketService init');
