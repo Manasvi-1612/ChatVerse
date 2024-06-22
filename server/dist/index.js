@@ -16,12 +16,12 @@ const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const helmet_1 = __importDefault(require("helmet"));
 const cors_1 = __importDefault(require("cors"));
-const client_1 = require("@prisma/client");
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const socket_1 = __importDefault(require("./services/socket"));
 const http_1 = require("http");
+const db_1 = __importDefault(require("./services/db"));
+
 dotenv_1.default.config();
-const prisma = new client_1.PrismaClient();
 const app = (0, express_1.default)();
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use(express_1.default.json());
@@ -60,5 +60,5 @@ main()
     throw err;
 })
     .finally(() => __awaiter(void 0, void 0, void 0, function* () {
-    yield prisma.$disconnect();
+    yield db_1.default.$disconnect();
 }));

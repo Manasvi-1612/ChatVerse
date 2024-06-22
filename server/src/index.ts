@@ -49,21 +49,19 @@ const main = async () => {
     });
 
 
+    //socket init
+    const server = createServer(app);
+    const socketService = new SocketService()
 
-     //socket init
-     const server = createServer(app);
-     const socketService = new SocketService()
- 
-     socketService.io.attach(server)
-     socketService.initListeners()
- 
+    socketService.io.attach(server)
+    socketService.initListeners()
+
 
     const port = process.env.PORT || 3000;
 
     server.listen(port, () => {
         console.log(`[server]: Server is running at http://localhost:${port}`);
     });
-
 
 }
 

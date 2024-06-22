@@ -3,11 +3,12 @@ import { setCredentials } from './authSlice'
 import { RootState } from '../store'
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://localhost:3000/api',
+    baseUrl: 'https://chatverse-bhj2.onrender.com/api',
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
 
         const token: any = (getState() as RootState).auth.token
+        console.log("token", getState())
 
         if (token) {
             headers.set("authorization", `Bearer ${token?.accessToken}`)
@@ -58,6 +59,6 @@ const baseQueryWithReauth: BaseQueryFn<
 
 export const apiSlice = createApi({
     baseQuery: baseQueryWithReauth,
-    tagTypes: ['Note', 'User'],
+    tagTypes: ['User'],
     endpoints: builder => ({})
 })
