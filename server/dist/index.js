@@ -20,6 +20,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const socket_1 = __importDefault(require("./services/socket"));
 const http_1 = require("http");
 const db_1 = __importDefault(require("./services/db"));
+
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
