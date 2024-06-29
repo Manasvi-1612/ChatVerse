@@ -30,6 +30,7 @@ const baseQueryWithReauth: BaseQueryFn<
 
     let result = await baseQuery(args, api, extraOptions)
 
+
     // If you want, handle other status codes, too
     if (result.error?.status !== null) {
         console.log('sending refresh token')

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { authSelector } from "../redux/slices/authSlice";
-import { jwtDecode, JwtPayload } from "jwt-decode"; // Add this import statement
+import { jwtDecode } from "jwt-decode"; // Add this import statement
 
 type authToken = {
     _id: string;

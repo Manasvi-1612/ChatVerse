@@ -19,7 +19,6 @@ class SocketService {
     //instance variable of class of type Server
     private _io: Server
  
-
     constructor() {
         console.log('SocketService init')
         this._io = new Server({

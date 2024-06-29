@@ -10,7 +10,7 @@ const prod = import.meta.env.PROD
 
 const RequireAuth = ({ children, fallbackPath }: { children: React.ReactNode, fallbackPath?: string }) => {
 
-    const [storage, setStorage] = useLocalStorage()
+    const [storage, _] = useLocalStorage()
     const token = useSelector(authSelector)
 
     const [refresh, { isSuccess, isUninitialized, isLoading, isError }] = useRefreshMutation()
@@ -23,8 +23,9 @@ const RequireAuth = ({ children, fallbackPath }: { children: React.ReactNode, fa
         if (effectRan.current === true || prod) {   //React 18 strict mode(only in development) fix 
             const res = async () => {
                 try {
-                    const response =
-                        await refresh({})
+
+                    await refresh({})
+
 
                     //There's one prblm we have isSuccess which can be set to true even before the setCredentials action is dispatched, that's why we set one more state to check yes we got the thing!
                     setTrueSuccess(true)
@@ -45,13 +46,13 @@ const RequireAuth = ({ children, fallbackPath }: { children: React.ReactNode, fa
 
     }, [])
 
+    const fp = fallbackPath || "/"
+
     if (isLoading) return <div>Loading...</div>
     else if (isError) {
         console.log("Error");
-        < Navigate to="/" />
+        < Navigate to={fp} />
     }
-
-    const fp = fallbackPath || ""
 
     let content;
 
@@ -63,7 +64,7 @@ const RequireAuth = ({ children, fallbackPath }: { children: React.ReactNode, fa
         content = <div>Loading...</div>
     } else if (isError) { //persist: yes, token: no
         console.log('error')
-        content = <Navigate to={'/'} />
+        content = <Navigate to={fp} />
     } else if (isSuccess && trueSuccess) { //persist: yes, token: yes
         console.log('success')
         content = children
