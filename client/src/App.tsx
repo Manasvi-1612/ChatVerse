@@ -1,14 +1,23 @@
-import { PropsWithChildren, Suspense } from 'react';
+import { Suspense } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import router from './router';
-import { ToggleColorMode } from './components/ToggleColorMode';
+import ThemeProvider from './theme';
+import { ColorModeProvider } from '@chakra-ui/react';
+import Layout from './components/Layout';
 
-function App({ children }: PropsWithChildren) {
+function App() {
+
+
   return <div className={``}>
-    <Suspense>
-      <ToggleColorMode />
-      <RouterProvider router={router} />
-    </Suspense>
+    <ColorModeProvider>
+      <ThemeProvider>
+        <Suspense>
+          <Layout>
+            <RouterProvider router={router} />
+          </Layout>
+        </Suspense>
+      </ThemeProvider>
+    </ColorModeProvider>
   </div>;
 }
 
