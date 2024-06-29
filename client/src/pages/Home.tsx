@@ -1,5 +1,4 @@
 
-
 import { Box, Flex, Stack, useColorMode, Image, Text, Button } from "@chakra-ui/react"
 
 const Home = () => {
