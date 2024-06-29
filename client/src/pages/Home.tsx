@@ -1,4 +1,5 @@
-import { Box, Flex, Stack, useColorMode, Image, Text, Button } from "@chakra-ui/react"
+import { Box, Flex, Stack, useColorMode, Image, Text, theme } from "@chakra-ui/react"
+import ButtonComponent from "./ButtonComponent"
 
 const Home = () => {
 
@@ -15,17 +16,26 @@ const Home = () => {
             >
                 <Flex justifyContent={'center'} alignItems={'center'} gap={12}>
 
-                    <Flex flexFlow={'column'} gap={3}>
+                    <Flex flexFlow={'column'} gap={6}>
                         <Text textStyle='h1'>Welcome to ChatVerse😇 </Text>
-                        <Button variant={'solid'} width={'100%'} sx={{ bg: (theme) => theme.styles.global({ colorMode }).palette.mode === 'light' ? 'gray.800' : 'whiteAlpha.700', color: (theme) => theme.styles.global({ colorMode }).palette.mode === 'light' ? 'whiteAlpha.700' : 'gray.800' }}>
-                            Call us
-                        </Button>
+                        <ButtonComponent text={'Join Now To Start Chatting!'} to="/signup" />
                     </Flex>
 
                     <Image src={'/assets/cute-cat.png'} alt="cat" objectFit={'cover'} maxW={500} />
                 </Flex>
             </Stack>
 
+            <Flex justifyContent={'center'} alignItems={'center'} >
+                <ButtonComponent text={'Lets Login In!'} roundedBottom={'3xl'} width={'50%'} to="/login" _after={{ background: (theme) => theme.styles.global({ colorMode }).palette.text.primary, filter: '', roundedBottom: '3xl' }}
+                    _hover={{
+                        _after: {
+                            filter: 'blur(0.8rem)',
+                            transition: 'filter 0.3s ease'
+                        },
+                    }}
+
+                />
+            </Flex>
         </Box>
     )
 }
