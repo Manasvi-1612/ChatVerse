@@ -19,6 +19,7 @@ class SocketService {
     //instance variable of class of type Server
     private _io: Server
  
+
     constructor() {
         console.log('SocketService init')
         this._io = new Server({
@@ -54,6 +55,7 @@ class SocketService {
             socket.on('joinRoom', function (room) {
                 socket.join(room);
                 console.log('user joined room', room) 
+
             })
 
             //whenever there's a new message - emit message to server (one side communication)

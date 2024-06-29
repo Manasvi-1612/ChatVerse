@@ -61,6 +61,8 @@ export const loginUserHandler = async (req: Request, res: Response, next: NextFu
         // //secure cookie with refresh token
         res.cookie('jwt', refreshToken, {
             httpOnly: true,
+            secure: true,
+            sameSite: 'none', //cross-site cookie 
             expires: new Date(Date.now() + 24 * 60 * 60 * 1000), //expiry time
         })
 
