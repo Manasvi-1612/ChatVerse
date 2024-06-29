@@ -1,5 +1,7 @@
+
 import { Box, Flex, Stack, useColorMode, Image, Text, theme } from "@chakra-ui/react"
 import ButtonComponent from "./ButtonComponent"
+
 
 const Home = () => {
 
@@ -16,9 +18,11 @@ const Home = () => {
             >
                 <Flex justifyContent={'center'} alignItems={'center'} gap={12}>
 
+
                     <Flex flexFlow={'column'} gap={6}>
                         <Text textStyle='h1'>Welcome to ChatVerse😇 </Text>
                         <ButtonComponent text={'Join Now To Start Chatting!'} to="/signup" />
+
                     </Flex>
 
                     <Image src={'/assets/cute-cat.png'} alt="cat" objectFit={'cover'} maxW={500} />
@@ -36,6 +40,7 @@ const Home = () => {
 
                 />
             </Flex>
+
         </Box>
     )
 }
