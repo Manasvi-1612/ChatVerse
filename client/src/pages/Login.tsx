@@ -31,8 +31,10 @@ const Login = () => {
                 try {
                     // With .unwrap(), it will resolve to the value of the fulfilled action, or throw on a rejected action.
                     // The idea here is that you should be able to dispatch an asyncThunk without having to catch it every time, but only if you really want to write more logic based on it.
+
                     setStorage(true)
                     await login(values).unwrap()
+
                     actions.resetForm()
                     navigate("/secure")
                 } catch (error) {

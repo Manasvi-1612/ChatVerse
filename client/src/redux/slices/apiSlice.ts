@@ -29,8 +29,8 @@ const baseQueryWithReauth: BaseQueryFn<
     // console.log(extraOptions) //custom like {shout: true}
 
     let result = await baseQuery(args, api, extraOptions)
+ 
 
-    console.log("result", result)
 
     // If you want, handle other status codes, too
     if (result.error?.status !== null) {
