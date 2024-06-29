@@ -30,7 +30,6 @@ const baseQueryWithReauth: BaseQueryFn<
 
     let result = await baseQuery(args, api, extraOptions)
 
- 
 
 
     // If you want, handle other status codes, too
