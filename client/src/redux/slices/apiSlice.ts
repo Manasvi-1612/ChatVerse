@@ -29,6 +29,7 @@ const baseQueryWithReauth: BaseQueryFn<
     // console.log(extraOptions) //custom like {shout: true}
 
     let result = await baseQuery(args, api, extraOptions)
+ 
 
 
     // If you want, handle other status codes, too
@@ -61,5 +62,5 @@ const baseQueryWithReauth: BaseQueryFn<
 export const apiSlice = createApi({
     baseQuery: baseQueryWithReauth,
     tagTypes: ['User'],
-    endpoints: builder => ({})
+    endpoints: () => ({})
 })
