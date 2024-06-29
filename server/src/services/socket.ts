@@ -15,10 +15,10 @@ import Redis from 'ioredis'
 //     throw new Error(err)
 // })
 
-
 class SocketService {
     //instance variable of class of type Server
     private _io: Server
+ 
 
     constructor() {
         console.log('SocketService init')

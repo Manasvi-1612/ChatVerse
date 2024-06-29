@@ -19,7 +19,6 @@ const socket_io_1 = require("socket.io");
 // sub.on('error', (err: string) => {
 //     throw new Error(err)
 // })
-
 class SocketService {
     constructor() {
         console.log('SocketService init');
