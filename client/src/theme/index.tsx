@@ -46,7 +46,11 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
                 lineHeight: '100%',
                 letterSpacing: '4px',
             },
+<<<<<<< HEAD
             
+=======
+
+>>>>>>> 7f66f1c0d0b0c2f16704c4665a160e585e42d2b1
         },
 
     }

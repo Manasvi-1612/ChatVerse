@@ -21,12 +21,16 @@ const main = async () => {
 
     app.use(cookieParser())
 
+
+    app.use(cookieParser())
+
     app.use(
         cors({
             origin: ["http://localhost:5173", "https://chat-verse-jade.vercel.app/"],
             credentials: true,
         })
     );
+
 
 
     // GLOBAL ERROR HANDLER
@@ -75,3 +79,4 @@ main()
     .finally(async () => {
         await prisma.$disconnect();
     });
+
