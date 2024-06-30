@@ -30,7 +30,11 @@ const baseQueryWithReauth: BaseQueryFn<
 
     let result = await baseQuery(args, api, extraOptions)
 
+<<<<<<< HEAD
+    console.log("result", result)
+=======
 
+>>>>>>> 7f66f1c0d0b0c2f16704c4665a160e585e42d2b1
 
     // If you want, handle other status codes, too
     if (result.error?.status !== null) {

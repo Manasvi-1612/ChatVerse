@@ -41,4 +41,8 @@ const palette = {
   },
 };
 
+<<<<<<< HEAD
 export default palette;
+=======
+export default palette;
+>>>>>>> 7f66f1c0d0b0c2f16704c4665a160e585e42d2b1

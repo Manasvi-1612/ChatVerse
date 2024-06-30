@@ -56,9 +56,13 @@ const authActions = apiSlice.injectEndpoints({
             }),
             async onQueryStarted({ queryFulfilled }) {
                 try {
+<<<<<<< HEAD
+                    await queryFulfilled
+=======
 
                     await queryFulfilled
 
+>>>>>>> 7f66f1c0d0b0c2f16704c4665a160e585e42d2b1
                 } catch (err) {
                     console.log(err)
                 }

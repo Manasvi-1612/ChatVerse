@@ -1,5 +1,5 @@
 
-import { Box, Flex, Stack, useColorMode, Image, Text, theme } from "@chakra-ui/react"
+import { Box, Flex, Stack, useColorMode, Image, Text } from "@chakra-ui/react"
 import ButtonComponent from "./ButtonComponent"
 
 
