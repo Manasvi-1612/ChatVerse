@@ -6,28 +6,28 @@ import { PrismaClient } from "@prisma/client";
 import AppError from "./utils/errorHandler";
 import { NextFunction } from "express";
 import cookieParser from 'cookie-parser';
-
+import SocketService from "./services/socket";
+import { createServer } from "http";
+import prisma from './services/db'
 
 dotenv.config();
 
-const prisma = new PrismaClient();
 const app: Express = express();
-
-const server = require("http").createServer(app);
 
 const main = async () => {
 
     app.use(express.json());
     app.use(helmet());
+
+    app.use(cookieParser())
+
     app.use(
         cors({
-            origin: "http://localhost:5173",
+            origin: ["http://localhost:5173","https://chat-verse-jade.vercel.app/"],
             credentials: true,
         })
     );
-    app.use(cookieParser());
 
-    
 
     // GLOBAL ERROR HANDLER
     app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
@@ -48,11 +48,23 @@ const main = async () => {
         res.send("HELLO TO THE SERVER!");
     });
 
+
+    //socket init
+    const server = createServer(app);
+    const socketService = new SocketService()
+
+    socketService.io.attach(server)
+    socketService.initListeners()
+
+
     const port = process.env.PORT || 3000;
 
-    const server = app.listen(port, () => {
+    server.listen(port, () => {
         console.log(`[server]: Server is running at http://localhost:${port}`);
     });
+
+
+
 }
 
 main()

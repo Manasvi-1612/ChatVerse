@@ -17,7 +17,7 @@ const authActions = apiSlice.injectEndpoints({
                 url: '/auth/logout',
                 method: 'POST'
             }),
-            async onQueryStarted(args, { dispatch, queryFulfilled }) {
+            async onQueryStarted({ dispatch, queryFulfilled }) {
                 try {
                     //on success - queryhas been fulfilled
                     await queryFulfilled;
@@ -38,10 +38,9 @@ const authActions = apiSlice.injectEndpoints({
                 url: '/auth/refresh',
                 method: 'GET',
             }),
-            async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+            async onQueryStarted({ dispatch, queryFulfilled }) {
                 try {
                     const { data } = await queryFulfilled
-                    console.log(data)
                     const { accessToken } = data
                     dispatch(setCredentials({ accessToken }))
                 } catch (err) {
@@ -55,10 +54,11 @@ const authActions = apiSlice.injectEndpoints({
                 url: '/auth/verify',
                 method: 'GET'
             }),
-            async onQueryStarted({ dispatch, queryFulfilled }) {
+            async onQueryStarted({ queryFulfilled }) {
                 try {
-                    const { data } = await queryFulfilled
-                    console.log("data", data)
+
+                    await queryFulfilled
+
                 } catch (err) {
                     console.log(err)
                 }

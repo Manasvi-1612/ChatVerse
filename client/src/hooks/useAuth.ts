@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { authSelector } from "../redux/slices/authSlice";
-import { jwtDecode, JwtPayload } from "jwt-decode"; // Add this import statement
+import { jwtDecode } from "jwt-decode"; // Add this import statement
 
 type authToken = {
     _id: string;
@@ -10,7 +10,6 @@ type authToken = {
 const useAuth = () => {
     const token = useSelector(authSelector);
 
-    console.log("token", token)
 
     if (token) {
         const decoded = jwtDecode<authToken>(JSON.stringify(token));

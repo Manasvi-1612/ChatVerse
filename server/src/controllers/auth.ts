@@ -3,8 +3,6 @@ import bcrypt from "bcryptjs";
 import { findUniqueUser, createUser, signToken, updateUser, findUser } from "../services/user";
 import AppError from "../utils/errorHandler";
 import jwt from "jsonwebtoken";
-import { ArgumentType } from "ioredis/built/Command";
-import prisma from "../services/db";
 
 const cookieOptions: CookieOptions = {
     httpOnly: true, //accessible only by the web server
@@ -63,8 +61,8 @@ export const loginUserHandler = async (req: Request, res: Response, next: NextFu
         // //secure cookie with refresh token
         res.cookie('jwt', refreshToken, {
             httpOnly: true,
-            // secure: true,// for https connection
-            sameSite: 'none',
+            secure: true,
+            sameSite: 'none', //cross-site cookie 
             expires: new Date(Date.now() + 24 * 60 * 60 * 1000), //expiry time
         })
 
@@ -86,6 +84,7 @@ export const refreshHandler = async (req: Request, res: Response, next: NextFunc
     try {
 
         const cookie = req.cookies
+
         if (!cookie?.jwt) {
             throw new AppError(401, 'Unauthorized')
         }

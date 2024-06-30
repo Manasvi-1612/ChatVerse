@@ -2,12 +2,9 @@ import { Heading, VStack, ButtonGroup, Button } from "@chakra-ui/react"
 import { Form, Formik } from "formik"
 import FormField from "../components/FormField"
 import { SignupValidationSchema } from "../lib/validator"
-import { useDispatch } from "react-redux"
 
 
 const Signup = () => {
-
-    const dispatch = useDispatch()
 
     const initialValues = {
         email: "",
@@ -19,7 +16,7 @@ const Signup = () => {
     return (
         <Formik
             initialValues={initialValues}
-            onSubmit={async (values, actions) => {
+            onSubmit={async () => {
                 // dispatch(registerUser(values) as any)
             }}
             validationSchema={SignupValidationSchema}

@@ -1,13 +1,18 @@
 import { lazy } from 'react';
-import SecureComponent from '../pages/SecureComponent';
+import Home from '../pages/Home';
 import RequireAuth from '../components/RequireAuth';
 const Signup = lazy(() => import('../pages/Signup'));
 const Login = lazy(() => import('../pages/Login'));
+const SecureComponent = lazy(() => import('../pages/SecureComponent'));
 
 
 const routes = [
     {
         path: '/',
+        element: <Home />,
+    },
+    {
+        path: '/login',
         element: <Login />,
     },
     {
@@ -16,7 +21,7 @@ const routes = [
     },
     {
         path: '/secure',
-        element: <RequireAuth fallbackPath={'/'} children={<SecureComponent />}  />
+        element: <RequireAuth fallbackPath={'/'} children={<SecureComponent />} />
     }
 ]
 
