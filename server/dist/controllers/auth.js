@@ -64,6 +64,8 @@ const loginUserHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, f
         // //secure cookie with refresh token
         res.cookie('jwt', refreshToken, {
             httpOnly: true,
+            secure: true,
+            sameSite: 'none', //cross-site cookie 
             expires: new Date(Date.now() + 24 * 60 * 60 * 1000), //expiry time
         });
         // //sent access token containing user data
@@ -95,7 +97,7 @@ const refreshHandler = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
             if (!user)
                 throw new errorHandler_1.default(401, 'Unauthorized');
             //generate a new access token - this is the new token that will be used to access protected routes
-            const accessToken = (0, user_1.signToken)(user, process.env.ACCESS_TOKEN_SECRET, '10s');
+            const accessToken = (0, user_1.signToken)(user, process.env.ACCESS_TOKEN_SECRET, '20s');
             res.status(200).json({ accessToken });
         }));
     }

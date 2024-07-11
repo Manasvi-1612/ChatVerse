@@ -46,6 +46,13 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
                 lineHeight: '100%',
                 letterSpacing: '4px',
             },
+            h3: {
+                fontSize: ['36px'],
+                fontWeight: 'semibold',
+                lineHeight: '100%',
+                letterSpacing: '1px',
+            },
+
 
         },
 
