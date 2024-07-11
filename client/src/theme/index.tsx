@@ -53,6 +53,7 @@ const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
                 letterSpacing: '1px',
             },
 
+
         },
 
     }

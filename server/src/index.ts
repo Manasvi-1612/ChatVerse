@@ -26,7 +26,7 @@ const main = async () => {
 
     app.use(
         cors({
-            origin: ["http://localhost:5173", "https://chat-verse-jade.vercel.app/"],
+            origin: ["http://localhost:5173", "https://chat-verse-jade.vercel.app"],
             credentials: true,
         })
     );
