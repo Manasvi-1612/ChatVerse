@@ -14,12 +14,14 @@ export const veriftToken = async (req: IUserRequest, res: Response, next: NextFu
 
     const authHeader = req.headers.authorization || req.headers.Authorization
 
+    console.log("authHeader", req)
 
     if (!(authHeader as string)?.startsWith('Bearer ')) {
         return res.status(401).json({ message: 'Unauthorized' })
     }
 
     const token = (authHeader as string).split(' ')[1]
+
     jwt.verify(
         token,
         process.env.ACCESS_TOKEN_SECRET!,

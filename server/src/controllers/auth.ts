@@ -90,7 +90,6 @@ export const refreshHandler = async (req: Request, res: Response, next: NextFunc
         }
 
         const refreshToken = cookie.jwt
-
         //verification of the token 
         jwt.verify(
             refreshToken,
@@ -103,7 +102,7 @@ export const refreshHandler = async (req: Request, res: Response, next: NextFunc
                 if (!user) throw new AppError(401, 'Unauthorized')
 
                 //generate a new access token - this is the new token that will be used to access protected routes
-                const accessToken = signToken(user, process.env.ACCESS_TOKEN_SECRET!, '10s')
+                const accessToken = signToken(user, process.env.ACCESS_TOKEN_SECRET!, '20s')
 
                 res.status(200).json({ accessToken })
             }

@@ -16,6 +16,7 @@ exports.veriftToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const veriftToken = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const authHeader = req.headers.authorization || req.headers.Authorization;
+    console.log("authHeader", req);
     if (!(authHeader === null || authHeader === void 0 ? void 0 : authHeader.startsWith('Bearer '))) {
         return res.status(401).json({ message: 'Unauthorized' });
     }

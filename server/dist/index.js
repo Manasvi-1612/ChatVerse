@@ -20,18 +20,15 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const socket_1 = __importDefault(require("./services/socket"));
 const http_1 = require("http");
 const db_1 = __importDefault(require("./services/db"));
-<<<<<<< HEAD
-=======
-
->>>>>>> 7f66f1c0d0b0c2f16704c4665a160e585e42d2b1
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use(express_1.default.json());
     app.use((0, helmet_1.default)());
     app.use((0, cookie_parser_1.default)());
+    app.use((0, cookie_parser_1.default)());
     app.use((0, cors_1.default)({
-        origin: "http://localhost:5173",
+        origin: ["http://localhost:5173", "https://chat-verse-jade.vercel.app/"],
         credentials: true,
     }));
     // GLOBAL ERROR HANDLER

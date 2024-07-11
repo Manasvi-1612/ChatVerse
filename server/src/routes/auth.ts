@@ -12,7 +12,7 @@ import { loginSchema, signupSchema } from "../validators/auth";
 router.post("/auth/login", validate(loginSchema), loginUserHandler);
 
 router.post("/auth/signup", validate(signupSchema), signupUserHandler);
- 
+
 router.post("/auth/logout", logoutHandler)
 
 router.get('/auth/refresh', refreshHandler)

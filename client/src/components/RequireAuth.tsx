@@ -57,7 +57,7 @@ const RequireAuth = ({ children, fallbackPath }: { children: React.ReactNode, fa
 
     if (!storage) { // persist: no
         console.log('no persist')
-        content = children
+        content = <Navigate to={fp} />
     } else if (isLoading) { //persist: yes, token: no
         console.log('loading')
         content = <div>Loading...</div>

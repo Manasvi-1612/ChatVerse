@@ -1,6 +1,6 @@
 
-import { Box, Flex, Stack, useColorMode, Image, Text } from "@chakra-ui/react"
-import ButtonComponent from "./ButtonComponent"
+import { Box, Flex, Stack, useColorMode, Image, Text, Divider, AbsoluteCenter, Spacer, VStack } from "@chakra-ui/react"
+import ButtonComponent from "../components/ButtonComponent"
 
 
 const Home = () => {
@@ -16,21 +16,19 @@ const Home = () => {
                 }}
                 px={4}
             >
-                <Flex justifyContent={'center'} alignItems={'center'} gap={12}>
-
+                <Flex justifyContent={'center'} alignItems={'center'} gap={8} flexFlow={{ base: 'column-reverse', md: 'row' }} >
 
                     <Flex flexFlow={'column'} gap={6}>
-                        <Text textStyle='h1'>Welcome to ChatVerse😇 </Text>
-                        <ButtonComponent text={'Join Now To Start Chatting!'} to="/signup" />
-
+                        <Text sx={{ textStyle: { base: 'h3', lg: 'h1' } }}>Welcome to ChatVerse</Text>
+                        <ButtonComponent text={'Join Now To Start Chatting!'} hideBelow='md' to="/signup" />
                     </Flex>
 
-                    <Image src={'/assets/cute-cat.png'} alt="cat" objectFit={'cover'} maxW={500} />
+                    <Image src={'/assets/cute-cat.png'} alt="cat" objectFit={'contain'} sx={{ width: { base: 300, md: 400, lg: 500 }, height: "100%" }} />
                 </Flex>
             </Stack>
 
             <Flex justifyContent={'center'} alignItems={'center'} >
-                <ButtonComponent text={'Lets Login In!'} roundedBottom={'3xl'} width={'50%'} to="/login" _after={{ background: (theme) => theme.styles.global({ colorMode }).palette.text.primary, filter: '', roundedBottom: '3xl' }}
+                <ButtonComponent text={'Lets Login In!'} roundedBottom={'3xl'} width={{ base: 'full', md: '50%' }} to="/login" _after={{ background: (theme) => theme.styles.global({ colorMode }).palette.text.primary, filter: '', roundedBottom: '3xl' }}
                     _hover={{
                         _after: {
                             filter: 'blur(0.8rem)',
@@ -40,6 +38,13 @@ const Home = () => {
 
                 />
             </Flex>
+
+            <Spacer />
+
+            <Text p={2} position={'fixed'} bottom={0} right={0}
+            >
+                &copy;Copyright. All rights reserved.
+            </Text>
 
         </Box>
     )
