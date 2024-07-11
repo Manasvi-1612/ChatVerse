@@ -15,7 +15,6 @@ const slice = createSlice({
   reducers: {
     setCredentials: (state, action: PayloadAction<any>) => {
       state.token = action.payload;
-      console.log("state", state)
     },
     logout: (state) => {
       state.token = null;
