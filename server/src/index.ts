@@ -49,7 +49,7 @@ const main = async () => {
     app.use('/api', require('./routes/auth'))
 
     app.get("/", (req: Request, res: Response) => {
-        res.send("HELLO TO THE SERVER!");
+        res.send("HELLO FROM THE SERVER!");
     });
 
 
