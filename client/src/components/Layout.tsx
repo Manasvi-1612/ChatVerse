@@ -1,12 +1,12 @@
 import { Box } from '@chakra-ui/react'
-import { ToggleColorMode } from './ToggleColorMode'
+import { ToggleColorMode } from './shared/ToggleColorMode'
 import React from 'react'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
     return (
-        <Box p={'2rem'}>
+        <Box overflow={'hidden'} height={'100svh'}>
             <ToggleColorMode />
-            <Box my={2}>{children}</Box>
+            <Box flex={'1'} overflow={'hidden'}>{children}</Box>
         </Box>
     )
 }

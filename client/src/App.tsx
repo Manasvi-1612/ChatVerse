@@ -8,7 +8,7 @@ import Layout from './components/Layout';
 function App() {
 
 
-  return <div className={``}>
+  return <>
     <ColorModeProvider>
       <ThemeProvider>
         <Suspense>
@@ -18,7 +18,7 @@ function App() {
         </Suspense>
       </ThemeProvider>
     </ColorModeProvider>
-  </div>;
+  </>
 }
 
 export default App;

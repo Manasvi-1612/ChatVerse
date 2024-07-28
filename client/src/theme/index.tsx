@@ -1,6 +1,6 @@
 // theme.ts
 
-import { ThemeConfig, ChakraProvider, extendTheme, StyleFunctionProps } from '@chakra-ui/react'
+import { ThemeConfig, ChakraProvider, StyleFunctionProps, extendTheme } from '@chakra-ui/react'
 import { ColorModeScript } from '@chakra-ui/color-mode'
 import palette from './pallete'
 

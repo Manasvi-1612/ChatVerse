@@ -1,9 +1,9 @@
 import { lazy } from 'react';
-import Home from '../pages/Home';
-import RequireAuth from '../components/RequireAuth';
-const Signup = lazy(() => import('../pages/Signup'));
-const Login = lazy(() => import('../pages/Login'));
-const SecureComponent = lazy(() => import('../pages/SecureComponent'));
+import Home from '../pages/home';
+// import RequireAuth from '../components/RequireAuth';
+const Signup = lazy(() => import('../pages/signup'));
+const Login = lazy(() => import('../pages/login'));
+const Dashboard = lazy(() => import('../pages/dashboard'));
 
 
 const routes = [
@@ -20,8 +20,8 @@ const routes = [
         element: <Signup />,
     },
     {
-        path: '/secure',
-        element: <RequireAuth fallbackPath={'/'} children={<SecureComponent />} />
+        path: '/dashboard',
+        element: <Dashboard/>
     }
 ]
 
