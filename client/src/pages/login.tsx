@@ -1,11 +1,11 @@
 import { LoginFrom } from "../components/forms/LoginForm"
 
 const Login = () => {
-  return (
+    return (
     <>
       <LoginFrom/>
     </>
-  )
+    )
 }
 
 export default Login
